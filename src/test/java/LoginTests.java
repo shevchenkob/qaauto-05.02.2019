@@ -3,35 +3,56 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
 
 public class LoginTests {
+
+    WebDriver driver;
+@BeforeMethod
+    public void beforeMethod() {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\shevchenko_b\\IdeaProjects\\qaauto-05.02.2019\\chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+    }
+    @AfterMethod
+    public void afterMethod() {
+    driver.quit();
+    }
+
     @Test
     public void successfullLoginTest() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\shevchenko_b\\IdeaProjects\\qaauto-05.02.2019\\chromedriver.exe");
-        System.setProperty("webdriver.chrome.silentLogging", "true");
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
 
-//Here I write all elements that will be used
+
+//elements that will be used
         String useremail = "johndoeseleniumtest@gmail.com";
         String userpassword = "johndoepassword";
-        WebElement SignIn = driver.findElement(By.id("login-submit"));
+        WebElement signIn = driver.findElement(By.id("login-submit"));
 
 
-//Here I write all methods
+
+//methods
         WebElement emailfield = driver.findElement(By.id("login-email"));
         WebElement passwordfield = driver.findElement(By.id("login-password"));
         emailfield.sendKeys(useremail);
         passwordfield.sendKeys(userpassword);
-        SignIn.click();
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        signIn.click();
         Thread.sleep(5000);
-        WebElement home = driver.findElement(By.id("feed-tab-icon"));
-        home.click();
 
+        WebElement home = driver.findElement(By.xpath("//li[@id='feed-nav-item']"));
+        Assert.assertTrue(home.isDisplayed(),"home is not displayed on Home page.");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home page URL is incorrect");
+
+
+
+    }
+
+    public void negativeLoginTest() {
 
     }
 }
