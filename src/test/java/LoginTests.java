@@ -25,8 +25,8 @@ public class LoginTests {
     driver.quit();
     }
 
-    @Test
-    public void successfullLoginTest() throws InterruptedException {
+    @Test (priority=1)
+    public void successfullLoginTest()  throws InterruptedException {
 
 
 //elements that will be used
@@ -51,9 +51,59 @@ public class LoginTests {
 
 
     }
+@Test (priority=2)
+    public void negativeLoginTestIncorrectPassword() throws InterruptedException {
 
-    public void negativeLoginTest() {
+        String useremail = "johndoeseleniumtest@gmail.com";
+        String userpassword = "fake";
+        WebElement signIn = driver.findElement(By.id("login-submit"));
 
+        WebElement emailfield = driver.findElement(By.id("login-email"));
+        WebElement passwordfield = driver.findElement(By.id("login-password"));
+        emailfield.sendKeys(useremail);
+        passwordfield.sendKeys(userpassword);
+        signIn.click();
+        Thread.sleep(5000);
+
+    WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-password']"));
+    Assert.assertTrue(passwordError.isDisplayed(),"incorrect password warning is not displayed on page.");
 
     }
+
+    @Test (priority=3)
+    public void negativeLoginTestIncorrectEmail() throws InterruptedException {
+
+        String useremail = "johndoeseleniumtest@fake.com";
+        String userpassword = "johndoepassword";
+        WebElement signIn = driver.findElement(By.id("login-submit"));
+
+        WebElement emailfield = driver.findElement(By.id("login-email"));
+        WebElement passwordfield = driver.findElement(By.id("login-password"));
+        emailfield.sendKeys(useremail);
+        passwordfield.sendKeys(userpassword);
+        signIn.click();
+        Thread.sleep(5000);
+
+        WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
+        Assert.assertTrue(passwordError.isDisplayed(), "incorrect email warning is not displayed on page.");
+    }
+
+    @Test (priority=4)
+    public void negativeLoginTestNotValidEmail() throws InterruptedException {
+
+        String useremail = "fake";
+        String userpassword = "johndoepassword";
+        WebElement signIn = driver.findElement(By.id("login-submit"));
+
+        WebElement emailfield = driver.findElement(By.id("login-email"));
+        WebElement passwordfield = driver.findElement(By.id("login-password"));
+        emailfield.sendKeys(useremail);
+        passwordfield.sendKeys(userpassword);
+        signIn.click();
+        Thread.sleep(5000);
+
+        WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
+        Assert.assertTrue(passwordError.isDisplayed(), "Please enter a valid email address. warning is not displayed on page.");
+    }
+
 }
