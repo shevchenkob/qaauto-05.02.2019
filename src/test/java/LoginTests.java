@@ -66,7 +66,8 @@ public class LoginTests {
         Thread.sleep(5000);
 
     WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-password']"));
-    Assert.assertTrue(passwordError.isDisplayed(),"incorrect password warning is not displayed on page.");
+    String myemailPasswordText = passwordError.getText();
+    Assert.assertEquals(myemailPasswordText,"Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
 
     }
 
@@ -84,8 +85,10 @@ public class LoginTests {
         signIn.click();
         Thread.sleep(5000);
 
-        WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
-        Assert.assertTrue(passwordError.isDisplayed(), "incorrect email warning is not displayed on page.");
+        WebElement myemailError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
+        String myemailErrorText = myemailError.getText();
+        Assert.assertEquals(myemailErrorText, "Hmm, we don't recognize that email. Please try again.", "incorrect email warning is not displayed on page.");
+        //Assert.assertTrue(myemailError.isDisplayed(), "incorrect email warning is not displayed on page.");
     }
 
     @Test (priority=4)
@@ -102,8 +105,9 @@ public class LoginTests {
         signIn.click();
         Thread.sleep(5000);
 
-        WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
-        Assert.assertTrue(passwordError.isDisplayed(), "Please enter a valid email address. warning is not displayed on page.");
+        WebElement emailError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
+        String emailErrorText = emailError.getText();
+        Assert.assertEquals(emailErrorText, "Please enter a valid email address.", "Please enter a valid email address. warning is not displayed on page.");
     }
 
 }
