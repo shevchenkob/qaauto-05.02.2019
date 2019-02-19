@@ -33,70 +33,59 @@ landingPage.login("johndoeseleniumtest@gmail.com", "johndoepassword");
 
         Thread.sleep(5000);
 
-        WebElement home = driver.findElement(By.xpath("//li[@id='feed-nav-item']"));
-        Assert.assertTrue(home.isDisplayed(),"home is not displayed on Home page.");
+        HomePage homePage = new HomePage(driver);
+
+        homePage.homeButton();
+        Assert.assertTrue(homePage.homeButton(),"home is not displayed on Home page.");
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home page URL is incorrect");
-
-
 
     }
 @Test (priority=2)
     public void negativeLoginTestIncorrectPassword() throws InterruptedException {
 
-        String useremail = "johndoeseleniumtest@gmail.com";
-        String userpassword = "fake";
-        WebElement signIn = driver.findElement(By.id("login-submit"));
+    LandingPage landingPage = new LandingPage(driver);
+    landingPage.login("johndoeseleniumtest@gmail.com", "fake");
 
-        WebElement emailfield = driver.findElement(By.id("login-email"));
-        WebElement passwordfield = driver.findElement(By.id("login-password"));
-        emailfield.sendKeys(useremail);
-        passwordfield.sendKeys(userpassword);
-        signIn.click();
         Thread.sleep(5000);
 
-    WebElement passwordError = driver.findElement(By.xpath("//div[@id='error-for-password']"));
-    String myemailPasswordText = passwordError.getText();
-    Assert.assertEquals(myemailPasswordText,"Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
+    LoginSubmit loginSubmit = new LoginSubmit(driver);
+
+    loginSubmit.myEmailPasswordText();
+
+    Assert.assertEquals(loginSubmit.myEmailPasswordText(),"Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
 
     }
 
     @Test (priority=3)
     public void negativeLoginTestIncorrectEmail() throws InterruptedException {
 
-        String useremail = "johndoeseleniumtest@fake.com";
-        String userpassword = "johndoepassword";
-        WebElement signIn = driver.findElement(By.id("login-submit"));
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.login("johndoeseleniumtest@fake.com", "johndoepassword");
 
-        WebElement emailfield = driver.findElement(By.id("login-email"));
-        WebElement passwordfield = driver.findElement(By.id("login-password"));
-        emailfield.sendKeys(useremail);
-        passwordfield.sendKeys(userpassword);
-        signIn.click();
         Thread.sleep(5000);
 
-        WebElement myemailError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
-        String myemailErrorText = myemailError.getText();
-        Assert.assertEquals(myemailErrorText, "Hmm, we don't recognize that email. Please try again.", "incorrect email warning is not displayed on page.");
-        //Assert.assertTrue(myemailError.isDisplayed(), "incorrect email warning is not displayed on page.");
+        LoginSubmit loginSubmit = new LoginSubmit(driver);
+
+        loginSubmit.myEmailErrorText();
+
+        Assert.assertEquals(loginSubmit.myEmailErrorText(), "Hmm, we don't recognize that email. Please try again.", "incorrect email warning is not displayed on page.");
+
     }
 
     @Test (priority=4)
     public void negativeLoginTestNotValidEmail() throws InterruptedException {
 
-        String useremail = "fake";
-        String userpassword = "johndoepassword";
-        WebElement signIn = driver.findElement(By.id("login-submit"));
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.login("fake", "johndoepassword");
 
-        WebElement emailfield = driver.findElement(By.id("login-email"));
-        WebElement passwordfield = driver.findElement(By.id("login-password"));
-        emailfield.sendKeys(useremail);
-        passwordfield.sendKeys(userpassword);
-        signIn.click();
+
         Thread.sleep(5000);
 
-        WebElement emailError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
-        String emailErrorText = emailError.getText();
-        Assert.assertEquals(emailErrorText, "Please enter a valid email address.", "Please enter a valid email address. warning is not displayed on page.");
+  LoginSubmit loginSubmit = new LoginSubmit(driver);
+
+  loginSubmit.emailErrorText();
+
+        Assert.assertEquals(loginSubmit.emailErrorText(), "Please enter a valid email address.", "Please enter a valid email address. warning is not displayed on page.");
     }
 
 }
