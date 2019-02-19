@@ -28,20 +28,9 @@ public class LoginTests {
     @Test (priority=1)
     public void successfullLoginTest()  throws InterruptedException {
 
+LandingPage landingPage = new LandingPage(driver);
+landingPage.login("johndoeseleniumtest@gmail.com", "johndoepassword");
 
-//elements that will be used
-        String useremail = "johndoeseleniumtest@gmail.com";
-        String userpassword = "johndoepassword";
-        WebElement signIn = driver.findElement(By.id("login-submit"));
-
-
-
-//methods
-        WebElement emailfield = driver.findElement(By.id("login-email"));
-        WebElement passwordfield = driver.findElement(By.id("login-password"));
-        emailfield.sendKeys(useremail);
-        passwordfield.sendKeys(userpassword);
-        signIn.click();
         Thread.sleep(5000);
 
         WebElement home = driver.findElement(By.xpath("//li[@id='feed-nav-item']"));
