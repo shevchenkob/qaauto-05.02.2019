@@ -3,18 +3,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LandingPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    WebElement emailField;
-    WebElement passwordField;
-    WebElement signIn;
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement signIn;
 
     public LandingPage(WebDriver driver) {
         this.driver = driver;
         initElements ();
     }
 
-    public void initElements() {
+    private void initElements() {
         emailField = driver.findElement(By.id("login-email"));
         passwordField = driver.findElement(By.id("login-password"));
         signIn = driver.findElement(By.id("login-submit"));
@@ -28,4 +28,9 @@ public class LandingPage {
     }
 
 
+    public boolean isPageLoaded() {
+        return signIn.isDisplayed()
+                && driver.getCurrentUrl().equals("https://www.linkedin.com/")
+                && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
+    }
 }

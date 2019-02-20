@@ -3,6 +3,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTests {
@@ -21,18 +22,27 @@ public class LoginTests {
         driver.quit();
     }
 
-    @Test(priority = 1)
-    public void successfulLoginTest() throws InterruptedException {
+    @DataProvider
+    public Object[][] ValidData() {
+        return new Object[][]{
+                {"johndoeseleniumtest@gmail.com", "johndoepassword"},
+                {"johndoeSeleniumTest@gmail.com", "johndoepassword"},
+                {" johndoeseleniumtest@gmail.com ", "johndoepassword"}
+        };
+    }
+
+    @Test(dataProvider = "ValidData", priority = 1)
+    public void successfulLoginTest(String userEmail, String userPassword) throws InterruptedException {
         LandingPage landingPage = new LandingPage(driver);
-        landingPage.login("johndoeseleniumtest@gmail.com", "johndoepassword");
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
+
+        landingPage.login(userEmail, userPassword);
 
         Thread.sleep(5000);
 
         HomePage homePage = new HomePage(driver);
 
-        homePage.homeButton();
-        Assert.assertTrue(homePage.homeButton(), "home is not displayed on Home page.");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home page URL is incorrect");
+        Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
 
     }
 
@@ -67,7 +77,6 @@ public class LoginTests {
 
         LandingPage landingPage = new LandingPage(driver);
         landingPage.login("fake", "johndoepassword");
-
 
         Thread.sleep(5000);
 
