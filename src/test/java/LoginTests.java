@@ -1,4 +1,5 @@
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -45,16 +46,31 @@ public class LoginTests {
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
 
     }
+//**Start error scenarious**
+    @DataProvider
+    public Object[][] inValidData() {
+        return new Object[][]{
+                {"johndoeseleniumtest@gmail.com", "fake", "Hmm, that's not the right password. Please try again or request a new one.", ""},
+                {"johndoeseleniumtest@fake.com", "johndoepassword", "", "Hmm, we don't recognize that email. Please try again."},
+               {"fake", "johndoepassword", "", "Please enter a valid email address."}
+        };
+    }
 
-    @Test(priority = 2)
-    public void negativeLoginTestIncorrectPassword() throws InterruptedException {
+    @Test(dataProvider = "inValidData", priority =2)
+    public void negativeLoginTestIncorrectPassword(String userEmail, String userPassword, String passwordError, String emailError) throws InterruptedException {
         LandingPage landingPage = new LandingPage(driver);
-        landingPage.login("johndoeseleniumtest@gmail.com", "fake");
+
+        landingPage.login(userEmail, userPassword);
+
 
         Thread.sleep(5000);
 
         LoginSubmit loginSubmit = new LoginSubmit(driver);
-        Assert.assertEquals(loginSubmit.passwordErrorText(), "Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
+
+        loginSubmit.passwordErrorText().equals(passwordError);
+        loginSubmit.emailErrorText().equals(emailError);
+
+       // Assert.assertEquals(loginSubmit.passwordErrorText(), "Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
 
     }
 

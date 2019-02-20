@@ -8,4 +8,5 @@ https://www.jetbrains.com/idea/download/
 4. Download chromedriver from http://chromedriver.chromium.org/downloads and unzip it to project folder
 5. Put in pom.xml import for selenium java from https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/3.141.59
 6. Download and install git from https://gitforwindows.org/
-7. Put in pom.xml import for test tool from https://mvnrepository.com/artifact/org.testng/testng
+7. Put in pom.xml import for test tool "testng" from https://mvnrepository.com/artifact/org.testng/testng
+8. Add DataProvider from https://www.mkyong.com/unittest/testng-parameter-testing-example/
