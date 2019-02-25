@@ -70,35 +70,35 @@ public class LoginTests {
         loginSubmit.passwordErrorText().equals(passwordError);
         loginSubmit.emailErrorText().equals(emailError);
 
-       // Assert.assertEquals(loginSubmit.passwordErrorText(), "Hmm, that's not the right password. Please try again or request a new one.", "incorrect password warning is not displayed on page.");
-
+        Assert.assertEquals(loginSubmit.passwordErrorText(), passwordError, "incorrect password warning is not displayed on page.");
+        Assert.assertEquals(loginSubmit.emailErrorText(), emailError, "incorrect email warning is not displayed on page.");
     }
 
-    @Test(priority = 3)
-    public void negativeLoginTestIncorrectEmail() throws InterruptedException {
-
-        LandingPage landingPage = new LandingPage(driver);
-        landingPage.login("johndoeseleniumtest@fake.com", "johndoepassword");
-
-        Thread.sleep(5000);
-
-        LoginSubmit loginSubmit = new LoginSubmit(driver);
-
-        Assert.assertEquals(loginSubmit.emailErrorText(), "Hmm, we don't recognize that email. Please try again.", "incorrect email warning is not displayed on page.");
-
-    }
-
-    @Test(priority = 4)
-    public void negativeLoginTestNotValidEmail() throws InterruptedException {
-
-        LandingPage landingPage = new LandingPage(driver);
-        landingPage.login("fake", "johndoepassword");
-
-        Thread.sleep(5000);
-
-        LoginSubmit loginSubmit = new LoginSubmit(driver);
-
-        Assert.assertEquals(loginSubmit.emailErrorText(), "Please enter a valid email address.", "Please enter a valid email address. warning is not displayed on page.");
-    }
+//    @Test(priority = 3)
+//    public void negativeLoginTestIncorrectEmail() throws InterruptedException {
+//
+//        LandingPage landingPage = new LandingPage(driver);
+//        landingPage.login("johndoeseleniumtest@fake.com", "johndoepassword");
+//
+//        Thread.sleep(5000);
+//
+//        LoginSubmit loginSubmit = new LoginSubmit(driver);
+//
+//        Assert.assertEquals(loginSubmit.emailErrorText(), "Hmm, we don't recognize that email. Please try again.", "incorrect email warning is not displayed on page.");
+//
+//    }
+//
+//    @Test(priority = 4)
+//    public void negativeLoginTestNotValidEmail() throws InterruptedException {
+//
+//        LandingPage landingPage = new LandingPage(driver);
+//        landingPage.login("fake", "johndoepassword");
+//
+//        Thread.sleep(5000);
+//
+//        LoginSubmit loginSubmit = new LoginSubmit(driver);
+//
+//        Assert.assertEquals(loginSubmit.emailErrorText(), "Please enter a valid email address.", "Please enter a valid email address. warning is not displayed on page.");
+//    }
 
 }
