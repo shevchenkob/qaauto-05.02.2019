@@ -37,7 +37,7 @@ public class LoginTests {
     public void successfulLoginTest(String userEmail, String userPassword) throws InterruptedException {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
-        HomePage homePage = landingPage.login(userEmail, userPassword);
+        HomePage homePage = (HomePage)landingPage.login(userEmail, userPassword);
 
         Thread.sleep(5000);
 
@@ -58,7 +58,7 @@ public class LoginTests {
 
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
-        LoginSubmit loginSubmit = landingPage.loginToSubmit(userEmail, userPassword);
+        LoginSubmit loginSubmit = (LoginSubmit) landingPage.login(userEmail, userPassword);
 
         Thread.sleep(5000);
 

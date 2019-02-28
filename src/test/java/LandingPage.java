@@ -23,18 +23,23 @@ public class LandingPage {
 
 
 
-    public HomePage login(String userEmail, String userPassword) {
+
+    public Object login(String userEmail, String userPassword) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signIn.click();
-        return new HomePage(driver);
+
+        String url = driver.getCurrentUrl();
+        if (url.contains("/feed")) {
+        return new HomePage(driver);}
+        else { return new LoginSubmit(driver); }
     }
-    public LoginSubmit loginToSubmit(String userEmail, String userPassword) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPassword);
-        signIn.click();
-        return new LoginSubmit(driver);
-    }
+//    public LoginSubmit loginToSubmit(String userEmail, String userPassword) {
+//        emailField.sendKeys(userEmail);
+//        passwordField.sendKeys(userPassword);
+//        signIn.click();
+//        return new LoginSubmit(driver);
+//    }
 
     public boolean isPageLoaded() {
         return signIn.isDisplayed()
