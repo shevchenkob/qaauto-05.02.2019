@@ -1,11 +1,18 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginSubmit {
     private WebDriver driver;
+
+    @FindBy (xpath = "//form[@class='login__form']")
     private WebElement loginForm;
+
+    @FindBy (xpath = "//div[@id='error-for-password']")
     private WebElement passwordError;
+
+    @FindBy (xpath = "//div[@id='error-for-username']")
     private WebElement emailError;
 
     public boolean isPageLoaded() {
@@ -14,16 +21,11 @@ public class LoginSubmit {
                 && driver.getTitle().contains("Sign In to LinkedIn");
     }
 
-
     public LoginSubmit (WebDriver driver) {
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver, this);
     }
-    private void initElements () {
-        loginForm = driver.findElement(By.xpath("//form[@class='login__form']"));
-        passwordError = driver.findElement(By.xpath("//div[@id='error-for-password']"));
-        emailError = driver.findElement(By.xpath("//div[@id='error-for-username']"));
-    }
+
     public String passwordErrorText () {
         return passwordError.getText();
     }

@@ -1,35 +1,15 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class LoginTests {
-
-    WebDriver driver;
-    LandingPage landingPage;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\shevchenko_b\\IdeaProjects\\qaauto-05.02.2019\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
-        landingPage = new LandingPage(driver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
+public class LoginTests extends BaseTest{
 
     @DataProvider
     public Object[][] ValidData() {
         return new Object[][]{
                 {"johndoeseleniumtest@gmail.com", "johndoepassword"},
-                {"johndoeSeleniumTest@gmail.com", "johndoepassword"},
-                {" johndoeseleniumtest@gmail.com ", "johndoepassword"}
+                //{"johndoeSeleniumTest@gmail.com", "johndoepassword"},
+               // {" johndoeseleniumtest@gmail.com ", "johndoepassword"}
         };
     }
 
@@ -37,7 +17,7 @@ public class LoginTests {
     public void successfulLoginTest(String userEmail, String userPassword) throws InterruptedException {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
-        HomePage homePage = (HomePage)landingPage.login(userEmail, userPassword);
+        HomePage homePage = landingPage.login(userEmail, userPassword, HomePage.class);
 
         Thread.sleep(5000);
 
@@ -48,8 +28,8 @@ public class LoginTests {
     public Object[][] inValidData() {
         return new Object[][]{
                 {"johndoeseleniumtest@gmail.com", "fake", "Hmm, that's not the right password. Please try again or request a new one.", ""},
-                {"johndoeseleniumtest@fake.com", "johndoepassword", "", "Hmm, we don't recognize that email. Please try again."},
-                {"fake", "johndoepassword", "", "Please enter a valid email address."}
+               // {"johndoeseleniumtest@fake.com", "johndoepassword", "", "Hmm, we don't recognize that email. Please try again."},
+              //  {"fake", "johndoepassword", "", "Please enter a valid email address."}
         };
     }
 
@@ -58,7 +38,7 @@ public class LoginTests {
 
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
-        LoginSubmit loginSubmit = (LoginSubmit) landingPage.login(userEmail, userPassword);
+        LoginSubmit loginSubmit =  landingPage.login(userEmail, userPassword, LoginSubmit.class);
 
         Thread.sleep(5000);
 

@@ -1,19 +1,19 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
     private WebDriver driver;
 
+    @FindBy (xpath = "//li[@id='feed-nav-item']")
     private WebElement home;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver, this);
     }
-    private void initElements() {
-        home = driver.findElement(By.xpath("//li[@id='feed-nav-item']"));
-    }
+
 
     public boolean isPageLoaded() {
         return home.isDisplayed()

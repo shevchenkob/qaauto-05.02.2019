@@ -21,15 +21,35 @@ public class LandingPage {
     }
 
 
-    public Object login(String userEmail, String userPassword) {
+//    public Object login2(String userEmail, String userPassword) {
+//        emailField.sendKeys(userEmail);
+//        passwordField.sendKeys(userPassword);
+//        signIn.click();
+//        String url = driver.getCurrentUrl();
+//        if (url.contains("/feed")) {
+//        return new HomePage(driver);}
+//        else { return new LoginSubmit(driver); }
+//    }
+
+    public <GenericPage> GenericPage login (String userEmail, String userPassword) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signIn.click();
-        String url = driver.getCurrentUrl();
-        if (url.contains("/feed")) {
-        return new HomePage(driver);}
-        else { return new LoginSubmit(driver); }
-    }
+        if (driver.getCurrentUrl().contains("/feed")) {
+            return (GenericPage) new HomePage(driver);
+        }
+       else {
+            return (GenericPage) new LoginSubmit(driver);
+        }
+        }
+
+        public <T> T login(String userEmail, String userPassword, Class<T> expectedPage) {
+            emailField.sendKeys(userEmail);
+            passwordField.sendKeys(userPassword);
+            signIn.click();
+            return PageFactory.initElements(driver, expectedPage);
+        }
+
 
     public boolean isPageLoaded() {
         return signIn.isDisplayed()
