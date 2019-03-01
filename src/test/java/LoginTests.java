@@ -48,8 +48,8 @@ public class LoginTests {
     public Object[][] inValidData() {
         return new Object[][]{
                 {"johndoeseleniumtest@gmail.com", "fake", "Hmm, that's not the right password. Please try again or request a new one.", ""},
-               // {"johndoeseleniumtest@fake.com", "johndoepassword", "", "Hmm, we don't recognize that email. Please try again."},
-                //{"fake", "johndoepassword", "", "Please enter a valid email address."}
+                {"johndoeseleniumtest@fake.com", "johndoepassword", "", "Hmm, we don't recognize that email. Please try again."},
+                {"fake", "johndoepassword", "", "Please enter a valid email address."}
         };
     }
 

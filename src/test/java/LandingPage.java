@@ -15,31 +15,21 @@ public class LandingPage {
     @FindBy(id = "login-submit")
     private WebElement signIn;
 
-    public LandingPage(WebDriver driver) {
+        public LandingPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
-
-
 
 
     public Object login(String userEmail, String userPassword) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signIn.click();
-
         String url = driver.getCurrentUrl();
         if (url.contains("/feed")) {
         return new HomePage(driver);}
         else { return new LoginSubmit(driver); }
     }
-//    public LoginSubmit loginToSubmit(String userEmail, String userPassword) {
-//        emailField.sendKeys(userEmail);
-//        passwordField.sendKeys(userPassword);
-//        signIn.click();
-//        return new LoginSubmit(driver);
-//    }
 
     public boolean isPageLoaded() {
         return signIn.isDisplayed()
