@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,8 +29,8 @@ public class LandingPage {
 //        signIn.click();
 //        String url = driver.getCurrentUrl();
 //        if (url.contains("/feed")) {
-//        return new HomePage(driver);}
-//        else { return new LoginSubmit(driver); }
+//        return new page.HomePage(driver);}
+//        else { return new page.LoginSubmit(driver); }
 //    }
 
     public <GenericPage> GenericPage login (String userEmail, String userPassword) {

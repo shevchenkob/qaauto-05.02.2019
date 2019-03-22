@@ -1,3 +1,6 @@
+package page;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,8 +15,8 @@ public class SearchPage {
     @FindBy (xpath = "//h3[contains(@class, 'search-results__total')]")
     private WebElement resultsTotal;
 
-    @FindBy (xpath = "//div[@class='search-result__wrapper']")
-    private List<WebElement> searchBlock;
+    @FindBy (xpath = "//li[contains(@class, 'search-result search-result__occluded-item')]")
+    private List<WebElement> searchBlocks;
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
@@ -28,17 +31,25 @@ public class SearchPage {
     }
 
 
+//    public List<String> getSearchResultsList() {
+//        List<String> searchListResultTexts = new ArrayList<String>();
+//        for (WebElement  searchBlock: searchBlocks){
+//             searchListResultTexts.add(searchBlock.getText());
+//        }
+//        return searchListResultTexts;
+//    }
+
     public List<String> getSearchResultsList() {
-        List<String> searchListResultTexts = new ArrayList<String>();
-        for (WebElement  searchBlockText: searchBlock){
-             searchListResultTexts.add(searchBlockText.getText());
+        List<String> searchResultList = new ArrayList<String>();
+        for (WebElement searchBlock: searchBlocks) {
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", searchBlock);
+            searchResultList.add(searchBlock.getText());
         }
-        return searchListResultTexts;
+        return searchResultList;
     }
 
     public int getSearchResultCount () {
-        return searchBlock.size();
+        return searchBlocks.size();
     }
-
 
 }
