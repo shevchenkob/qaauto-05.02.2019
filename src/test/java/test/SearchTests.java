@@ -3,7 +3,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
 import page.SearchPage;
-
 import java.util.List;
 
 public class SearchTests extends BaseTest {

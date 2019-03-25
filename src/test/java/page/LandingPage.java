@@ -17,6 +17,9 @@ public class LandingPage {
     @FindBy(id = "login-submit")
     private WebElement signIn;
 
+    @FindBy(xpath = "//a[@class='link-forgot-password']")
+    private WebElement forgotPasswordButton;
+
         public LandingPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -57,5 +60,10 @@ public class LandingPage {
         return signIn.isDisplayed()
                 && driver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
+    }
+
+    public ResetPasswordPage resetPassword() {
+        forgotPasswordButton.click();
+        return new ResetPasswordPage(driver);
     }
 }
