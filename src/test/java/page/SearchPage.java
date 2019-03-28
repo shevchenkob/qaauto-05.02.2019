@@ -9,8 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchPage {
-    private WebDriver driver;
+public class SearchPage extends BasePage{
 
     @FindBy (xpath = "//h3[contains(@class, 'search-results__total')]")
     private WebElement resultsTotal;
@@ -21,6 +20,8 @@ public class SearchPage {
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementIsWisible(resultsTotal, 5);
+
     }
 
 

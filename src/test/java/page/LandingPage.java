@@ -5,8 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage {
-    private WebDriver driver;
+/**
+ * Landing Page is class that used as start page during navigation to linkedin.com
+ */
+public class LandingPage extends BasePage{
+
 
     @FindBy(id = "login-email")
     private WebElement emailField;
@@ -20,6 +23,11 @@ public class LandingPage {
     @FindBy(xpath = "//a[@class='link-forgot-password']")
     private WebElement forgotPasswordButton;
 
+    /**
+     * Title
+     * Constructor of class LandingPage.
+     * @param driver
+     */
         public LandingPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -36,10 +44,18 @@ public class LandingPage {
 //        else { return new page.LoginSubmit(driver); }
 //    }
 
+    /**
+     * Title
+     * @param userEmail
+     * @param userPassword
+     * @param <GenericPage>
+     * @return ?
+     */
     public <GenericPage> GenericPage login (String userEmail, String userPassword) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signIn.click();
+        waitUntilElementIsWisible(forgotPasswordButton, 5);
         if (driver.getCurrentUrl().contains("/feed")) {
             return (GenericPage) new HomePage(driver);
         }
@@ -53,6 +69,7 @@ public class LandingPage {
             passwordField.sendKeys(userPassword);
             signIn.click();
             return PageFactory.initElements(driver, expectedPage);
+
         }
 
 

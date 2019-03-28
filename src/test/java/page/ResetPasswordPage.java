@@ -1,12 +1,15 @@
 package page;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Wait;
+import util.GMailService;
 
-public class ResetPasswordPage {
-    private WebDriver driver;
+public class ResetPasswordPage extends BasePage{
+
 
     @FindBy (xpath = "//input[@id='username']")
     private WebElement emailRestoreField;
@@ -26,18 +29,32 @@ public class ResetPasswordPage {
     @FindBy (xpath = "//button[@id='reset-password-submit-button']")
     private WebElement goToHomeButton;
 
-    //String userEmail = "johndoeseleniumtest@gmail.com";
-    String newPassword = "qwerty#3qwerty#3";
-
     public ResetPasswordPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public HomePage resetPassword (String userEmail) throws InterruptedException {
+    public HomePage resetPassword (String userEmail, String newPassword) throws InterruptedException {
         emailRestoreField.sendKeys(userEmail);
+
+        String messageSubject = "here's the link to reset your password";
+        String messageTo = userEmail;
+        String messageFrom = "security-noreply@linkedin.com";
+
+        GMailService gMailService = new GMailService();
+        gMailService.connect();
         findAccountButton.click();
-        Thread.sleep(180000);
+
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 120);
+        System.out.println("Content: " + message);
+
+        resetPasswordUrl = StringUtils
+                .substringBetween(message, "href=\"", "\" style=\"cursor:pointer;color:#008CC9;-webkit-text-size-adjust:100%;display:inline-block;text-decoration:none;-ms-text-size-adjust:100%;\">Reset my password")
+                .replace("amp", "");
+        System.out.println(resetPasswordUrl);
+        driver.get(resetPasswordUrl);
+
+        Thread.sleep(10000);
         newPasswordField.sendKeys(newPassword);
         retypeNewPasswordField.sendKeys(newPassword);
         submit.click();

@@ -13,10 +13,9 @@ public class SearchTests extends BaseTest {
 
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
         HomePage homePage = landingPage.login("johndoeseleniumtest@gmail.com", "johndoepassword");
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
         SearchPage searchPage = homePage.search(searchTerm);
-        Thread.sleep(5000);
         Assert.assertTrue(searchPage.isPageLoaded(), "Search page is not loaded.");
 
         Assert.assertEquals(searchPage.getSearchResultCount(), 10, "Search results count is wrong.");
