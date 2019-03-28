@@ -49,7 +49,7 @@ public class ResetPasswordPage extends BasePage{
         System.out.println("Content: " + message);
 
         resetPasswordUrl = StringUtils
-                .substringBetween(message, "href=\"", "\" style=\"cursor:pointer;color:#008CC9;-webkit-text-size-adjust:100%;display:inline-block;text-decoration:none;-ms-text-size-adjust:100%;\">Reset my password")
+                .substringBetween(message, "line-height:1.25;\"><a href=\"", "\" style=\"cursor:pointer;color:#008CC9;-webkit-text-size-adjust:100%;display:inline-block;text-decoration:none;-ms-text-size-adjust:100%;\">Reset my password")
                 .replace("amp", "");
         System.out.println(resetPasswordUrl);
         driver.get(resetPasswordUrl);

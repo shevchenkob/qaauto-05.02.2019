@@ -10,3 +10,4 @@ https://www.jetbrains.com/idea/download/
 6. Download and install git from https://gitforwindows.org/
 7. Put in pom.xml import for test tool "testng" from https://mvnrepository.com/artifact/org.testng/testng
 8. Add DataProvider from https://www.mkyong.com/unittest/testng-parameter-testing-example/
+9. Add to pom.xml import from https://mvnrepository.com/artifact/org.apache.commons/commons-lang3/3.8.1
